@@ -1,7 +1,7 @@
 use std::io;
 use std::io::Write;
 use std::collections::LinkedList;
-use core::str;
+
 
 
 struct Date{
@@ -33,6 +33,7 @@ impl Date{
 
         //for formating date into way i want it to look, panics if wrong data are passed
 
+        //there was string , change it if you cant resolve it with i32
         let date_splited:Vec<i32> = input.split('.').collect();
 
 
