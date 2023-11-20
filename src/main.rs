@@ -33,7 +33,7 @@ impl Date{
 
         //for formating date into way i want it to look, panics if wrong data are passed
 
-        //fixed
+       
         let date_splited:Vec<&str> = input.trim().split('.').collect();
 
 
@@ -86,6 +86,8 @@ fn main(){
     let mut list:LinkedList<Data> = LinkedList::new();
     let mut input:String = String::new();
     let exit_code = 0;
+
+
     loop{
         print_commands();
         print!("->");
@@ -99,6 +101,9 @@ fn main(){
             "smaz" => list = smaz(list),
              _ => ()
         }
+
+        //input fix
+        input.clear();
         print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
     }
 }
@@ -124,9 +129,10 @@ fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
     println!("Like this: 22.11.2005");
     print!("Date: ");
     input = user_input(input);
-
     data.get_date(&input);
-
+    println!();
+    print!("Text: ");
+    input = user_input(input);
     data.get_value(input);
     list.push_front(data);
     list
