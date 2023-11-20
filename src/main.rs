@@ -34,7 +34,6 @@ impl Date{
         //for formating date into way i want it to look, panics if wrong data are passed
 
         //fixed
-        dbg!(input);
         let date_splited:Vec<&str> = input.trim().split('.').collect();
 
 
