@@ -34,7 +34,7 @@ impl Date{
         //for formating date into way i want it to look, panics if wrong data are passed
 
         //there was string , change it if you cant resolve it with i32
-        let date_splited:Vec<i32> = input.split('.').collect();
+        let date_splited:Vec<&str> = input.split('.').collect();
 
 
         self.change(date_splited[0].parse::<i32>().unwrap(),date_splited[1].parse::<i32>().unwrap(),date_splited[2].parse::<i32>().unwrap());
