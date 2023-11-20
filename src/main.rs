@@ -31,13 +31,13 @@ impl Date{
     }
     fn format_date(&mut self,input:&String){
 
-        //for formating date into way i want it to look, panics if wrong data are passed
-
-       
-        let date_splited:Vec<&str> = input.trim().split('.').collect();
+        //for formatting date into way i want it to look, panics if wrong data are passed
 
 
-        self.change(date_splited[0].parse::<i32>().unwrap(),date_splited[1].parse::<i32>().unwrap(),date_splited[2].parse::<i32>().unwrap());
+        let date_split:Vec<&str> = input.trim().split('.').collect();
+
+
+        self.change(date_split[0].parse::<i32>().unwrap(), date_split[1].parse::<i32>().unwrap(), date_split[2].parse::<i32>().unwrap());
 
         //check for stupidities xd if some are found, panics
         let month_arr:[i32;12] = [31,28,31,30,31,30,31,31,30,31,30,31];
@@ -68,13 +68,13 @@ impl Data{
     }
     fn get_date(&mut self, input:&String){
 
-        //self explainatory
+        //self explanatory
 
         self.datum.format_date(&input);
     }
     fn get_value(&mut self,text:String){
 
-        //self explainatory
+        //self explanatory
 
         self.value = text;
     }
@@ -97,7 +97,7 @@ fn main(){
             "predchozi" => list = predchozi(list),
             "dalsi" => list = dalsi(list),
             "novy" => list = novy(list),
-            "uloz" => list = uloz(list),
+            "uloz" => uloz(&list),
             "smaz" => list = smaz(list),
              _ => ()
         }
@@ -137,10 +137,9 @@ fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
     list.push_front(data);
     list
 
-
 }
-fn uloz(list:LinkedList<Data>) -> LinkedList<Data>{
-    list
+fn uloz(list:&LinkedList<Data>) {
+
 }
 fn smaz(list:LinkedList<Data>) -> LinkedList<Data>{
     list
