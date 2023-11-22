@@ -1,7 +1,7 @@
 use std::io;
-use std::io::Write;
+use std::io::{empty, Write};
 use std::collections::LinkedList;
-
+use std::path::Iter;
 
 
 struct Date{
@@ -82,27 +82,25 @@ impl Data{
 fn main(){
 
     //user interface
-
     let mut list:LinkedList<Data> = LinkedList::new();
+    let mut iternow:&Data = &Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
 
-
     loop{
         print_commands();
+        print_zaznam_info(&iternow,&list);
         print!("->");
-        input = user_input(input);
-        match input.to_lowercase().trim(){
-            "zavri" => std::process::exit(exit_code),
-            "predchozi" => list = predchozi(list),
-            "dalsi" => list = dalsi(list),
-            "novy" => list = novy(list),
-            "uloz" => uloz(&list),
-            "smaz" => list = smaz(list),
-             _ => ()
-        }
-
-        //input fix
+            input = user_input(input);
+            match input.to_lowercase().trim(){
+                "zavri" => std::process::exit(exit_code), //exits
+                "predchozi" => iternow = list.iter().clone().last().unwrap(), //go back
+                "dalsi" => iternow = list.iter().clone().next().unwrap(),//go front
+                "novy" => list = novy(list), //create new
+                "uloz" => uloz(&list), //save
+                "smaz" => list = smaz(list), //delete
+                _ => ()
+            }
         input.clear();
         print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
     }
@@ -114,11 +112,12 @@ fn user_input(mut input:String) -> String{
         .expect("Failed to read input");
     input
 }
-fn dalsi(list:LinkedList<Data>) -> LinkedList<Data>{
-   list
-}
-fn predchozi( list:LinkedList<Data>) -> LinkedList<Data>{
-    list
+fn print_zaznam_info(iternow:&Data,list:&LinkedList<Data>){
+    println!("Pocet zaznamu: {}",list.iter().count());
+
+    println!("Date: {}.{}.{}", iternow.datum.day,iternow.datum.month,iternow.datum.year ) ;
+    println!("Value:");
+    println!("{}",iternow.value);
 }
 fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
 
