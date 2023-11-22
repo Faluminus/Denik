@@ -1,3 +1,5 @@
+#![feature(linked_list_remove)]
+
 use std::io;
 use std::io::Write;
 use std::collections::LinkedList;
@@ -84,6 +86,7 @@ fn main(){
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
     let mut iter = list.iter();
+    let mut counter:usize = 0;
     let mut iternow:&Data  = &Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
@@ -100,11 +103,11 @@ fn main(){
             input = user_input(input);
             match input.to_lowercase().trim(){
                 "zavri" => std::process::exit(exit_code), //exits
-                "predchozi" => iternow = iter.clone().last().unwrap() , //go back
-                "dalsi" => iternow = iter.clone().next().unwrap(),//go front
+                "predchozi" => {iternow = iter.clone().last().unwrap();if counter >=0 { counter-=1;} }, //go back
+                "dalsi" => {iternow = iter.clone().next().unwrap(); if counter <= iter.len() -1 {counter += 1}},//go front
                 "novy" => list = novy(list), //create new
                 "uloz" => uloz(&list), //save
-                "smaz" => list = smaz(list), //delete
+                "smaz" => list = smaz(list,counter), //delete
                 _ => ()
             }
         input.clear();
@@ -146,7 +149,8 @@ fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
 fn uloz(list:&LinkedList<Data>) {
 
 }
-fn smaz(list:LinkedList<Data>) -> LinkedList<Data> {
+fn smaz(mut list:LinkedList<Data>,index:usize) -> LinkedList<Data> {
+    list.remove(index);
     list
 }
 fn print_commands(){
