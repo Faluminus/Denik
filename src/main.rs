@@ -1,7 +1,7 @@
 use std::io;
-use std::io::{empty, Write};
+use std::io::Write;
 use std::collections::LinkedList;
-use std::path::Iter;
+
 
 
 struct Date{
@@ -83,19 +83,25 @@ fn main(){
 
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
-    let mut iternow:&Data = &Data::new();
+    let mut iter = list.iter();
+    let mut iternow:&Data  = &Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
 
     loop{
         print_commands();
-        print_zaznam_info(&iternow,&list);
+        if let Data = &iternow {
+            println!(
+                "Date {}.{}.{}  Text {}",
+                Data.datum.day, Data.datum.month, Data.datum.year, Data.value
+            );
+        }
         print!("->");
             input = user_input(input);
             match input.to_lowercase().trim(){
                 "zavri" => std::process::exit(exit_code), //exits
-                "predchozi" => iternow = list.iter().clone().last().unwrap(), //go back
-                "dalsi" => iternow = list.iter().clone().next().unwrap(),//go front
+                "predchozi" => iternow = iter.clone().last().unwrap() , //go back
+                "dalsi" => iternow = iter.clone().next().unwrap(),//go front
                 "novy" => list = novy(list), //create new
                 "uloz" => uloz(&list), //save
                 "smaz" => list = smaz(list), //delete
@@ -140,7 +146,7 @@ fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
 fn uloz(list:&LinkedList<Data>) {
 
 }
-fn smaz(list:LinkedList<Data>) -> LinkedList<Data>{
+fn smaz(list:LinkedList<Data>) -> LinkedList<Data> {
     list
 }
 fn print_commands(){
