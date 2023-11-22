@@ -85,7 +85,7 @@ fn main(){
 
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
-    let mut iter = list.iter();
+    let mut iter = list.iter().clone();
     let mut counter:usize = 0;
     let mut iternow:&Data  = &Data::new();
     let mut input:String = String::new();
