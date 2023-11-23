@@ -87,7 +87,6 @@ fn main(){
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
     let mut counter:usize = 0;
-    let mut iter =  list.iter_mut();
     let mut iternow:&Data = &Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
@@ -107,8 +106,8 @@ fn main(){
             input = user_input(input);
             match input.to_lowercase().trim(){
                 "zavri" => std::process::exit(exit_code), //exits
-                "predchozi" => {if counter >=0 { counter-=1;} }, //go back
-                "dalsi" => {if counter <= list.iter_mut().len() -1 {counter += 1;}},//go front
+                "predchozi" => {iternow = list.iter().last().unwrap();if counter >=0 { counter-=1;} }, //go back
+                "dalsi" => {iternow = list.iter().next().unwrap();if counter <= list.iter_mut().len() -1 {counter += 1;}},//go front
                 "novy" => novy(&mut list), //create new
                 "smaz" => smaz(&mut list,counter), //delete
                 _ => ()
@@ -140,6 +139,7 @@ fn novy(list:&mut LinkedList<Data>){
     print!("Date: ");
     input = user_input(input);
     data.get_date(&input);
+    input.clear();
     println!();
     print!("Text: ");
     input = user_input(input);
