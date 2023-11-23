@@ -87,7 +87,8 @@ fn main(){
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
     let mut counter:usize = 0;
-    let mut iternow:&mut Data = &mut Data::new();
+    let mut iter =  list.iter_mut();
+    let mut iternow:&Data = &Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
 
@@ -95,16 +96,19 @@ fn main(){
         print_commands();
         print_zaznam_info(&list);
         println!("Vybrané: {}",counter);
-        if list.is_empty() == false{
-
-        }
-
+        //if list.is_empty() == false{
+        //    for i in 1..counter{
+        //        iter.next();
+        //    }
+        //    iternow = iter.next().unwrap();
+        //    println!("Date:{}.{}.{}  Text:{} ",iternow.datum.day , iternow.datum.month, iternow.datum.year , iternow.value);
+        //}
         print!("->");
             input = user_input(input);
             match input.to_lowercase().trim(){
                 "zavri" => std::process::exit(exit_code), //exits
-                "predchozi" => {iternow= list.iter_mut().last().unwrap();if counter >=0 { counter-=1;} }, //go back
-                "dalsi" => {iternow = list.iter_mut().next().unwrap();if counter <= list.iter_mut().len() -1 {counter += 1;}},//go front
+                "predchozi" => {if counter >=0 { counter-=1;} }, //go back
+                "dalsi" => {if counter <= list.iter_mut().len() -1 {counter += 1;}},//go front
                 "novy" => novy(&mut list), //create new
                 "smaz" => smaz(&mut list,counter), //delete
                 _ => ()
@@ -122,7 +126,7 @@ fn user_input(mut input:String) -> String{
         .expect("Failed to read input");
     input
 }
-//Tady takhle 
+//Tady takhle
 fn print_zaznam_info(list:&LinkedList<Data>){
     println!("Pocet zaznamu: {}",list.iter().count());
 }
