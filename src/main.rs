@@ -86,28 +86,25 @@ fn main(){
 
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
-    let mut iter = list.iter();
     let mut counter:usize = 0;
-    let mut iternow:&Data  = &Data::new();
+    let mut iternow:&mut Data = &mut Data::new();
     let mut input:String = String::new();
     let exit_code = 0;
 
     loop{
         print_commands();
-        if let Data = &iternow {
-            println!(
-                "Date {}.{}.{}  Text {}",
-                Data.datum.day, Data.datum.month, Data.datum.year, Data.value
-            );
+        print_zaznam_info(&list);
+        if list.is_empty() == false{
+
         }
+
         print!("->");
             input = user_input(input);
             match input.to_lowercase().trim(){
                 "zavri" => std::process::exit(exit_code), //exits
-                "predchozi" => {iternow = iter.clone().last().unwrap();if counter >=0 { counter-=1;} }, //go back
-                "dalsi" => {iternow = iter.clone().next().unwrap(); if counter <= iter.len() -1 {counter += 1}},//go front
+                "predchozi" => {iternow= list.iter_mut().last().unwrap();if counter >=0 { counter-=1;} }, //go back
+                "dalsi" => {iternow = list.iter_mut().next().unwrap();if counter <= list.iter_mut().len() -1 {counter += 1;}},//go front
                 "novy" => novy(&mut list), //create new
-                "uloz" => uloz(&list), //save
                 "smaz" => smaz(&mut list,counter), //delete
                 _ => ()
             }
@@ -115,6 +112,8 @@ fn main(){
         print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
     }
 }
+
+
 fn user_input(mut input:String) -> String{
     io::stdout().flush().unwrap();
     io::stdin()
@@ -122,12 +121,8 @@ fn user_input(mut input:String) -> String{
         .expect("Failed to read input");
     input
 }
-fn print_zaznam_info(iternow:&Data,list:&LinkedList<Data>){
+fn print_zaznam_info(list:&LinkedList<Data>){
     println!("Pocet zaznamu: {}",list.iter().count());
-
-    println!("Date: {}.{}.{}", iternow.datum.day,iternow.datum.month,iternow.datum.year ) ;
-    println!("Value:");
-    println!("{}",iternow.value);
 }
 fn novy(list:&mut LinkedList<Data>){
 
@@ -144,9 +139,6 @@ fn novy(list:&mut LinkedList<Data>){
     input = user_input(input);
     data.get_value(input);
     list.push_front(data);
-}
-fn uloz(list:&LinkedList<Data>) {
-
 }
 fn smaz(list:&mut LinkedList<Data>,index:usize){
     list.remove(index);
