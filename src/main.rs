@@ -51,6 +51,7 @@ impl Date{
         }
     }
 }
+
 struct Data{
     datum: Date,
     value: String,
@@ -85,7 +86,7 @@ fn main(){
 
     //user interface
     let mut list:LinkedList<Data> = LinkedList::new();
-    let mut iter = list.iter().clone();
+    let mut iter = list.iter();
     let mut counter:usize = 0;
     let mut iternow:&Data  = &Data::new();
     let mut input:String = String::new();
@@ -105,9 +106,9 @@ fn main(){
                 "zavri" => std::process::exit(exit_code), //exits
                 "predchozi" => {iternow = iter.clone().last().unwrap();if counter >=0 { counter-=1;} }, //go back
                 "dalsi" => {iternow = iter.clone().next().unwrap(); if counter <= iter.len() -1 {counter += 1}},//go front
-                "novy" => list = novy(list), //create new
+                "novy" => novy(&mut list), //create new
                 "uloz" => uloz(&list), //save
-                "smaz" => list = smaz(list,counter), //delete
+                "smaz" => smaz(&mut list,counter), //delete
                 _ => ()
             }
         input.clear();
@@ -128,7 +129,7 @@ fn print_zaznam_info(iternow:&Data,list:&LinkedList<Data>){
     println!("Value:");
     println!("{}",iternow.value);
 }
-fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
+fn novy(list:&mut LinkedList<Data>){
 
     let mut data:Data = Data::new();
     let mut input:String = String::new();
@@ -143,15 +144,12 @@ fn novy(mut list:LinkedList<Data>) -> LinkedList<Data>{
     input = user_input(input);
     data.get_value(input);
     list.push_front(data);
-    list
-
 }
 fn uloz(list:&LinkedList<Data>) {
 
 }
-fn smaz(mut list:LinkedList<Data>,index:usize) -> LinkedList<Data> {
+fn smaz(list:&mut LinkedList<Data>,index:usize){
     list.remove(index);
-    list
 }
 fn print_commands(){
     println!("----------------");
