@@ -94,6 +94,7 @@ fn main(){
     loop{
         print_commands();
         print_zaznam_info(&list);
+        println!("Vybrané: {}",counter);
         if list.is_empty() == false{
 
         }
@@ -121,6 +122,7 @@ fn user_input(mut input:String) -> String{
         .expect("Failed to read input");
     input
 }
+//Tady takhle 
 fn print_zaznam_info(list:&LinkedList<Data>){
     println!("Pocet zaznamu: {}",list.iter().count());
 }
